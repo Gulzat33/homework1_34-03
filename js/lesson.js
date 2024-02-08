@@ -1,2 +1,2 @@
 //PHONE  CHECKER
- const phoneInput = document.guerye
+ const phoneInput = document.querySelector("button")
