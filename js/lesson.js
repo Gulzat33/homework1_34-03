@@ -101,46 +101,89 @@
 
  // Tsb Silver
 
-const tabContents= document.querySelectorAll('.tab_content_block')
-const tabs = document.querySelectorAll('.tab_content_item')
-const tabsParent = document.querySelector('.tab_content_items')
+// const tabContents= document.querySelectorAll('.tab_content_block')
+// const tabs = document.querySelectorAll('.tab_content_item')
+// const tabsParent = document.querySelector('.tab_content_items')
+//
+//
+// const hideTabContents = () => {
+//     tabContents.forEach((item)=> {
+//         item.style.display = 'none'
+//     })
+//     tabs.forEach((item) => {
+//         item.classList.remove('tab_content_item_active')
+//     })
+// }
+
+// const showTabContents = (index = 0) => {
+//     tabContents[index].style.display = 'block'
+//     tabs[index].classList.add('tab_content_item_active')
+// }
+//
+// tabsParent.onclick = (event) => {
+//     if (event.target.classList.contains('tab_content_item')) {
+//         tabs.forEach((tabItem, tabIndex) => {
+//             if (event.target === tabItem) {
+//                 hideTabContents()
+//                 showTabContents(tabIndex)
+//             }
+//         })
+//     }
+// }
+// const autoTabContentsSlide = (i = 0) =>{
+//     setInterval(() =>{
+//         i++
+//         if (i>tabContents.length -1) {
+//             i = 0
+//         }
+//         hideTabContents()
+//         showTabContents(i)
+//     }, 3000)
+// }
+// autoTabContentsSlide()
+// hideTabContents()
+// showTabContents()
 
 
-const hideTabContents = () => {
-    tabContents.forEach((item)=> {
-        item.style.display = 'none'
-    })
-    tabs.forEach((item) => {
-        item.classList.remove('tab_content_item_active')
-    })
-}
 
-const showTabContents = (index = 0) => {
-    tabContents[index].style.display = 'block'
-    tabs[index].classList.add('tab_content_item_active')
-}
+// HomeWork5
+// convertor
 
-tabsParent.onclick = (event) => {
-    if (event.target.classList.contains('tab_content_item')) {
-        tabs.forEach((tabItem, tabIndex) => {
-            if (event.target === tabItem) {
-                hideTabContents()
-                showTabContents(tabIndex)
+
+const somInput= document.querySelector('#som')
+const usdInput= document.querySelector('#usd')
+const eurInput= document.querySelector('#eur')
+
+const convertor =(element, targetElement, current)=>{
+    element.oninput=()=>{
+        const request = new XMLHttpRequest()
+        request.open("GET", "../data/convertor.json")
+        request.setRequestHeader("Content-Type", "application/json")
+        request.send()
+
+        request.onload=()=>{
+            if (request.status === 200) {
+                const response = JSON.parse(request.responseText)
+                if (current === 'som') {
+                    targetElement.value = (element.value / response.usd).toFixed(2)
+                    eurInput.value = (element.value / response.eur).toFixed(2)
+                } else if (current === 'usd') {
+                    targetElement.value = (element.value * response.usd).toFixed(2)
+                    eurInput.value = (element.value * response.usd / response.eur).toFixed(2)
+                } else if (current === 'eur') {
+                    targetElement.value = (element.value * response.eur).toFixed(2)
+                    usdInput.value = (element.value * response.eur / response.usd).toFixed(2)
+                }
+                if (element.value === ''|| targetElement.value === '0') {
+                    eurInput.value = '';
+                    usdInput.value = '';
+                }
             }
-        })
+
+        }
     }
 }
-const autoTabContentsSlide = (i = 0) =>{
-    setInterval(() =>{
-        i++
-        if (i>tabContents.length -1) {
-            i = 0
-        }
-        hideTabContents()
-        showTabContents(i)
-    }, 3000)
-}
-autoTabContentsSlide()
-hideTabContents()
-showTabContents()
 
+convertor(somInput,usdInput,"som")
+convertor(usdInput,somInput,"usd")
+convertor(eurInput,somInput,"eur")
