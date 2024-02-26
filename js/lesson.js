@@ -101,53 +101,54 @@
 
  // Tsb Silver
 
-// const tabContents= document.querySelectorAll('.tab_content_block')
-// const tabs = document.querySelectorAll('.tab_content_item')
-// const tabsParent = document.querySelector('.tab_content_items')
-//
-//
-// const hideTabContents = () => {
-//     tabContents.forEach((item)=> {
-//         item.style.display = 'none'
-//     })
-//     tabs.forEach((item) => {
-//         item.classList.remove('tab_content_item_active')
-//     })
-// }
+const tabContents= document.querySelectorAll('.tab_content_block')
+const tabs = document.querySelectorAll('.tab_content_item')
+const tabsParent = document.querySelector('.tab_content_items')
 
-// const showTabContents = (index = 0) => {
-//     tabContents[index].style.display = 'block'
-//     tabs[index].classList.add('tab_content_item_active')
-// }
-//
-// tabsParent.onclick = (event) => {
-//     if (event.target.classList.contains('tab_content_item')) {
-//         tabs.forEach((tabItem, tabIndex) => {
-//             if (event.target === tabItem) {
-//                 hideTabContents()
-//                 showTabContents(tabIndex)
-//             }
-//         })
-//     }
-// }
-// const autoTabContentsSlide = (i = 0) =>{
-//     setInterval(() =>{
-//         i++
-//         if (i>tabContents.length -1) {
-//             i = 0
-//         }
-//         hideTabContents()
-//         showTabContents(i)
-//     }, 3000)
-// }
-// autoTabContentsSlide()
-// hideTabContents()
-// showTabContents()
+
+const hideTabContents = () => {
+    tabContents.forEach((item)=> {
+        item.style.display = 'none'
+    })
+    tabs.forEach((item) => {
+        item.classList.remove('tab_content_item_active')
+    })
+}
+
+const showTabContents = (index = 0) => {
+    tabContents[index].style.display = 'block'
+    tabs[index].classList.add('tab_content_item_active')
+}
+
+tabsParent.onclick = (event) => {
+    if (event.target.classList.contains('tab_content_item')) {
+        tabs.forEach((tabItem, tabIndex) => {
+            if (event.target === tabItem) {
+                hideTabContents()
+                showTabContents(tabIndex)
+            }
+        })
+    }
+}
+const autoTabContentsSlide = (i = 0) =>{
+    setInterval(() =>{
+        i++
+        if (i>tabContents.length -1) {
+            i = 0
+        }
+        hideTabContents()
+        showTabContents(i)
+    }, 3000)
+}
+autoTabContentsSlide()
+hideTabContents()
+showTabContents()
 
 
 
 // HomeWork5
 // convertor
+
 
 
 const somInput= document.querySelector('#som')
@@ -187,3 +188,41 @@ const convertor =(element, targetElement, current)=>{
 convertor(somInput,usdInput,"som")
 convertor(usdInput,somInput,"usd")
 convertor(eurInput,somInput,"eur")
+
+//Homework6
+//CARD SWITCHER
+
+
+const btnPrev = document.querySelector("#btn-prev");
+const btnNext = document.querySelector("#btn-next");
+const cardBlock = document.querySelector(".card");
+
+let count = 0;
+
+btnNext.onclick = () => {
+    count = (count % 200) + 1;
+    fetchData(count);
+}
+
+btnPrev.onclick = () => {
+    count = (count - 2 + 200) % 200 + 1;
+    fetchData(count);
+}
+
+function fetchData(count) {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+        .then(response => response.json())
+        .then(data => {
+            cardBlock.style.borderColor = data.completed ? 'green' : 'red';
+            cardBlock.innerHTML = `<p>${data.title}</p>`;
+            cardBlock.innerHTML += `<p style="color:${data.completed ? 'green' : 'red'}">${data.completed}</p>`;
+            cardBlock.innerHTML += `<span>${data.id}</span>`;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+//  HW6.2
+fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Ошибка при выполнении запроса:', error));
