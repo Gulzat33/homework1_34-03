@@ -226,3 +226,45 @@ fetch('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error('Ошибка при выполнении запроса:', error));
+
+
+
+
+
+
+//WEATHER
+
+const cityInput:Element = document.querySelector('.cityName')
+const citySpan:Element = document.querySelector('.city')
+const tempSpan:Element = document.querySelector('.temp')
+const searchButton:Element = document.querySelector('#search')
+
+const BAESE_URL='http://api.openweathermap.org'
+const API_KEY= 'e417df62e04d3d111abeab19cea714'
+
+
+//query params- параметры запроса(API)
+const searchCity =()=>{
+    SearchButton.onclick() => {
+        fetch(`${BAESE_URL}data/2.5/weather?q=${cityInput.value()}&appid=${API_KEY}`)
+            .then (response: Response => reaponse.json())
+        .then(data => {
+            citySpan.innerHTML = data. name? data.name:'город не найден!'
+            tempSpan.innerHTML=Math.round(data.main.temp -273)+'&deg;C':'...'
+        })
+    }
+}
+
+
+
+
+
+searchCity()
+
+
+//optional chaining - орциональная цепочка  -?.
+
+const user:{name: string}={name: 'Nurdin'}
+console.log(user.address?.street)
+
+}

@@ -153,3 +153,37 @@ xhr.onload = function() {
 xhr.onerror = function() {
     console.error("Сетевая ошибка при загрузке файла.");
 };
+
+
+
+
+
+
+
+//async await,
+//try catch
+
+const url="http://jsonpleceholder.typicode.com/posts
+
+
+
+    const getPosts =async () =>{
+    const response:Promise <Response> = await fetch(url)
+        console data await respons.json()
+        console
+        console.log(data)
+    } catch(error){
+    console.log(error)
+    }
+}
+
+
+
+    // const getPost =()=>{
+    // fetch(url)
+    //     .then(response=> response.json())
+    //     .then(data =>{
+    //         console.log(data)
+    //         response
+    //     })
+    // }
